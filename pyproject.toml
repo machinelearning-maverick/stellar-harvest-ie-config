@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stellar-harvest-ie-config"
+version = "0.1.0"
+description = "Shared configuration for StellarHarvest Insight Engine modules: logging setup and pytest fixtures"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+  { name = "Machine Learning Maverick", email = "github@machinelearningmaverick.com" }
+]
+# No runtime dependencies on external libraries; uses only Python stdlib
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.2.0"
+]
+
+[project.entry-points."pytest11"]
+stellar_harvest_ie_config = "stellar_harvest_ie_config.pytest_plugin"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["stellar_harvest_ie_config*"]
