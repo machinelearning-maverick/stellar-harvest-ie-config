@@ -62,8 +62,8 @@ echo "▶️  Publishing project in $PROJECT_DIR"
 [[ -n $VERSION ]] && echo "   – filtering for version: $VERSION"
 
 # build wheel + sdist
-echo "📦 Building artifacts…"
-pip install --quiet build twine
+echo "📦 Installing locally and building artifacts..."
+pip install --quiet -e . build twine
 python -m build
 
 # prepare list of files to upload
