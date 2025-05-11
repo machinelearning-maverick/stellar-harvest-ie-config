@@ -14,7 +14,7 @@ set -euo pipefail
 # Prereqs:
 #   pip install build twine
 #   .env (in this script’s dir) containing:
-#     DEVPI_URL=https://example.com/devpi/team/pypi/
+#     TWINE_REPOSITORY_URL=https://example.com/devpi/team/pypi/
 #     TWINE_USERNAME=team
 #     TWINE_PASSWORD=YourSecretHere
 # ------------------------------------------------------------
@@ -25,12 +25,12 @@ if [[ -f "$SCRIPT_DIR/.env" ]]; then
   # shellcheck disable=SC1090
   source "$SCRIPT_DIR/.env"
 else
-  echo "❗  No .env found in $SCRIPT_DIR; please create it with DEVPI_URL, TWINE_USERNAME, TWINE_PASSWORD"
+  echo "❗  No .env found in $SCRIPT_DIR; please create it with TWINE_REPOSITORY_URL, TWINE_USERNAME, TWINE_PASSWORD"
   exit 1
 fi
 
 # ensure required vars
-: "${DEVPI_URL:?Need DEVPI_URL in .env}"
+: "${TWINE_REPOSITORY_URL:?Need TWINE_REPOSITORY_URL in .env}"
 : "${TWINE_USERNAME:?Need TWINE_USERNAME in .env}"
 : "${TWINE_PASSWORD:?Need TWINE_PASSWORD in .env}"
 
@@ -61,10 +61,13 @@ cd "$PROJECT_DIR"
 echo "▶️  Publishing project in $PROJECT_DIR"
 [[ -n $VERSION ]] && echo "   – filtering for version: $VERSION"
 
+source .venv/bin/activate
+
 # build wheel + sdist
 echo "📦 Installing locally and building artifacts..."
-pip install --quiet -e . build twine
-python -m build
+pip install -r requirements.txt --upgrade
+pip install --quiet --upgrade -e . build twine
+python3 -m build
 
 # prepare list of files to upload
 if [[ -n $VERSION ]]; then
@@ -82,11 +85,11 @@ echo "🚀 Uploading ${#FILES[@]} file(s):"
 printf "   %s\n" "${FILES[@]}"
 
 # upload with twine
-TWINE_REPOSITORY_URL="$DEVPI_URL" \
+TWINE_REPOSITORY_URL="$TWINE_REPOSITORY_URL" \
 TWINE_USERNAME="$TWINE_USERNAME" \
 TWINE_PASSWORD="$TWINE_PASSWORD" \
 twine upload -r "" \
-  --repository-url "$DEVPI_URL" \
+  --repository-url "$TWINE_REPOSITORY_URL" \
   "${FILES[@]}"
 
 echo "✅ Publish complete!"
