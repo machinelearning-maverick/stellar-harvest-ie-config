@@ -3,14 +3,13 @@ import logging
 import inspect
 
 
-def _truncate(value, max_items):
-    """Truncate collections to avoid flooding logs."""
+def _truncate(value, max_items: int) -> str:
     if isinstance(value, (list, tuple, set)):
         items = list(value)
         if len(items) > max_items:
-            truncated = type(value)(items[:max_items])
-            return f"{truncated}... (+{len(items) - max_items} more)"
-    return value
+            return f"{items[:max_items]}... (+{len(items) - max_items} more)"
+        return str(items)
+    return repr(value)
 
 
 def _truncate_args(args, kwargs, max_items):
