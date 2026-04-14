@@ -18,18 +18,56 @@ def setup_logging():
                 "formatter": "default",
                 "stream": sys.stdout,
             },
-            # You can add RotatingFileHandler, SysLogHandler, etc.
         },
         "root": {
-            "level": "INFO",
-            "handlers": ["console"]
+            "level": "WARNING",  # third-party libs (pydantic, aiokafka, etc.) — warnings only
+            "handlers": ["console"],
         },
         "loggers": {
-            # Package-specific overrides:
+            "stellar_harvest_ie_config": {
+                "level": "DEBUG",
+                "handlers": ["console"],
+                "propagate": False,   # prevent duplicate output to root's console handler
+            },
+            "stellar_harvest_ie_models": {
+                "level": "DEBUG",
+                "handlers": ["console"],
+                "propagate": False,
+            },
+            "stellar_harvest_ie_stream": {
+                "level": "DEBUG",
+                "handlers": ["console"],
+                "propagate": False,
+            },
+            "stellar_harvest_ie_store": {
+                "level": "DEBUG",
+                "handlers": ["console"],
+                "propagate": False,
+            },
             "stellar_harvest_ie_producers": {
                 "level": "DEBUG",
                 "handlers": ["console"],
-                "propagate": False
+                "propagate": False,
             },
-        }
+            "stellar_harvest_ie_consumers": {
+                "level": "DEBUG",
+                "handlers": ["console"],
+                "propagate": False,
+            },
+            "stellar_harvest_ie_ui": {
+                "level": "DEBUG",
+                "handlers": ["console"],
+                "propagate": False,
+            },
+            "stellar_harvest_ie_ml_stellar": {
+                "level": "DEBUG",
+                "handlers": ["console"],
+                "propagate": False,
+            },
+            "stellar_harvest_ie_tests": {
+                "level": "DEBUG",
+                "handlers": ["console"],
+                "propagate": False,
+            },
+        },
     })
