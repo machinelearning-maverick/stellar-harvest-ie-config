@@ -59,6 +59,11 @@ def setup_logging():
                 "handlers": ["console"],
                 "propagate": False,
             },
+            "stellar_harvest_ie_deployment": {
+                "level": "DEBUG",
+                "handlers": ["console"],
+                "propagate": False,
+            },
             "stellar_harvest_ie_ml_stellar": {
                 "level": "DEBUG",
                 "handlers": ["console"],
