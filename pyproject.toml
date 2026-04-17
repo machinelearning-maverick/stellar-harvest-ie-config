@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stellar-harvest-ie-config"
-version = "0.1.1"
+version = "0.1.2"
 description = "Shared configuration for StellarHarvest Insight Engine modules: logging setup and pytest fixtures"
 readme = "README.md"
 requires-python = ">=3.11"
